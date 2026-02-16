@@ -7,16 +7,16 @@ type DashboardLayoutProps = {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex min-h-screen w-full">
-      <aside className="hidden md:block w-72 border-r shrink-0 sticky top-0 h-screen">
+    <div className="min-h-screen flex">
+      <aside className="hidden md:block w-72 h-screen border-r shrink-0 sticky top-0">
         <Sidebar />
       </aside>
 
-      <div className="flex flex-1 flex-col">
+      <div className="flex-1 flex flex-col">
         <Navbar />
 
         <main className="flex-1 bg-muted/30 p-4 md:p-8">
-          <div className="mx-auto max-w-6xl">{children}</div>
+          <div className="max-w-6xl mx-auto">{children}</div>
         </main>
       </div>
     </div>

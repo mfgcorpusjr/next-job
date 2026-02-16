@@ -15,16 +15,16 @@ import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
 
 export default function Navbar() {
   return (
-    <header className="flex h-16 w-full items-center justify-between border-b bg-background px-4 md:px-6">
+    <header className="h-16 w-full border-b bg-background px-4 md:px-6 flex items-center justify-between">
       <div>
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
-              <LucideMenu className="h-5 w-5" />
+              <LucideMenu className="size-5" />
             </Button>
           </SheetTrigger>
 
-          <SheetContent side="left" className="p-0 w-72 bg-card">
+          <SheetContent side="left" className="w-72 bg-card p-0">
             <SheetHeader>
               <SheetTitle />
 
