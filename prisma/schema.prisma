@@ -7,26 +7,14 @@ datasource db {
   provider = "postgresql"
 }
 
-enum JobStatus {
-  Pending
-  Interview
-  Declined
-}
-
-enum JobType {
-  FullTime
-  PartTime
-  Internship
-}
-
 model Job {
   id String @id @default(uuid())
   clerkId String
   position String
   company String
   location String
-  status JobStatus
-  type JobType
+  status String
+  type String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
