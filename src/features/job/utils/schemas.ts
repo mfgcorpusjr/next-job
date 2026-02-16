@@ -15,8 +15,8 @@ export const upsertJobSchema = z.object({
     .string()
     .trim()
     .min(2, { error: "Location must be at least 2 characters" }),
-  status: z.enum(statuses.map((s) => s.value)),
-  type: z.enum(types.map((t) => t.value)),
+  status: z.enum(statuses),
+  type: z.enum(types),
 });
 
 export type UpsertJobFormData = z.infer<typeof upsertJobSchema>;

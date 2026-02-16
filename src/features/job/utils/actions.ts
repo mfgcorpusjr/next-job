@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import prisma from "@/lib/prisma";
 import {
   UpsertJobFormData,
@@ -25,6 +27,9 @@ export const upsertJob = async ({ id = "", formData }: upsertJobProps) => {
       create: { ...validatedData, clerkId: userId },
       update: validatedData,
     });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/jobs");
 
     return { status: "SUCCESS", message: "Job created" };
   } catch (e) {
