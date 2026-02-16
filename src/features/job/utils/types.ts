@@ -5,11 +5,13 @@ export type UpsertJobProps = {
   formData: UpsertJobFormData;
 };
 
-export type GetStatisticsDataReturnType = Promise<{
+export type Statistic = {
   Pending: number;
   Interview: number;
   Declined: number;
-}>;
+};
+
+export type GetStatisticsDataReturnType = Promise<Statistic>;
 
 export type GetChartDataReturnType = Promise<
   {
