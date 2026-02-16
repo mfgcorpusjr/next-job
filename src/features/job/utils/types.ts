@@ -13,9 +13,9 @@ export type Statistic = {
 
 export type GetStatisticsDataReturnType = Promise<Statistic>;
 
-export type GetChartDataReturnType = Promise<
-  {
-    count: number;
-    date: string;
-  }[]
->;
+export type Chart = {
+  count: number;
+  date: string;
+};
+
+export type GetChartDataReturnType = Promise<Chart[]>;
