@@ -27,28 +27,36 @@ export default function Sidebar() {
         <Logo />
       </div>
 
-      <nav className="flex-1 space-y-2 p-4">
-        {links.map((link) => {
-          const isActive = link.href === pathname;
-          const className = isActive
-            ? "bg-primary/10 text-primary"
-            : "text-muted-foreground hover:bg-secondary hover:text-foreground";
+      <nav className="flex-1 px-4 py-8">
+        <div className="space-y-4">
+          <p className="px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+            Main Menu
+          </p>
 
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all",
-                className,
-              )}
-            >
-              <link.icon className="h-4 w-4" />
+          <div className="space-y-2">
+            {links.map((link) => {
+              const isActive = link.href === pathname;
+              const className = isActive
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground";
 
-              {link.label}
-            </Link>
-          );
-        })}
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all",
+                    className,
+                  )}
+                >
+                  <link.icon className="h-4 w-4" />
+
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </nav>
     </div>
   );

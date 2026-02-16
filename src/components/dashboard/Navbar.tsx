@@ -24,7 +24,7 @@ export default function Navbar() {
             </Button>
           </SheetTrigger>
 
-          <SheetContent side="left" className="p-0 w-72">
+          <SheetContent side="left" className="p-0 w-72 bg-card">
             <SheetHeader>
               <SheetTitle />
 
