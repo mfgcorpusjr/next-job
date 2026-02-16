@@ -2,19 +2,16 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { subMonths, startOfMonth, format, eachMonthOfInterval } from "date-fns";
+import { startOfMonth, subMonths, format } from "date-fns";
 
 import prisma from "@/lib/prisma";
-import {
-  UpsertJobFormData,
-  upsertJobSchema,
-} from "@/features/job/utils/schemas";
+import { upsertJobSchema } from "@/features/job/utils/schemas";
 import { getUserIdOrRedirect, renderError } from "@/utils/actions";
-
-type upsertJobProps = {
-  id?: string;
-  formData: UpsertJobFormData;
-};
+import {
+  UpsertJobProps,
+  GetStatisticsDataReturnType,
+  GetChartDataReturnType,
+} from "@/features/job/utils/types";
 
 export const getJob = async (id: string) => {
   const userId = await getUserIdOrRedirect();
@@ -33,7 +30,7 @@ export const getJob = async (id: string) => {
   return redirect("/jobs");
 };
 
-export const upsertJob = async ({ id = "", formData }: upsertJobProps) => {
+export const upsertJob = async ({ id = "", formData }: UpsertJobProps) => {
   const userId = await getUserIdOrRedirect();
 
   try {
@@ -56,7 +53,7 @@ export const upsertJob = async ({ id = "", formData }: upsertJobProps) => {
   }
 };
 
-export const getStatisticsData = async () => {
+export const getStatisticsData = async (): GetStatisticsDataReturnType => {
   const userId = await getUserIdOrRedirect();
 
   const data = await prisma.job.groupBy({
@@ -86,43 +83,39 @@ export const getStatisticsData = async () => {
   };
 };
 
-export const getChartData = async () => {
+export const getChartData = async (): GetChartDataReturnType => {
   const userId = await getUserIdOrRedirect();
 
   const now = new Date();
   const sixMonthsAgo = startOfMonth(subMonths(now, 5));
 
-  const data = await prisma.job.findMany({
+  const jobs = await prisma.job.findMany({
     where: {
       clerkId: userId,
       createdAt: { gte: sixMonthsAgo },
     },
-    orderBy: {
-      createdAt: "asc",
+    select: { createdAt: true },
+  });
+
+  const referenceData = Array.from({ length: 6 }, (_, i) => {
+    const monthDate = subMonths(now, i);
+    return {
+      date: format(monthDate, "yyyy-MM"),
+      count: 0,
+    };
+  }).reverse();
+
+  const counts = jobs.reduce(
+    (acc, job) => {
+      const month = format(job.createdAt, "yyyy-MM");
+      acc[month] = (acc[month] || 0) + 1;
+      return acc;
     },
-  });
+    {} as Record<string, number>,
+  );
 
-  const monthInterval = eachMonthOfInterval({
-    start: sixMonthsAgo,
-    end: now,
-  });
-
-  const groups: Record<string, number> = {};
-  monthInterval.forEach((date) => {
-    groups[format(date, "yyyy-MM")] = 0;
-  });
-
-  data.forEach((d) => {
-    const key = format(d.createdAt, "yyyy-MM");
-    if (groups[key] !== undefined) {
-      groups[key]++;
-    }
-  });
-
-  const chartData = Object.entries(groups).map(([month, count]) => ({
-    month,
-    count,
+  return referenceData.map((ref) => ({
+    ...ref,
+    count: counts[ref.date] || 0,
   }));
-
-  return chartData;
 };
