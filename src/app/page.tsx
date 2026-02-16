@@ -3,7 +3,7 @@ import Hero from "@/components/home/Hero";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col bg-muted/30">
       <Navbar />
 
       <Hero />
