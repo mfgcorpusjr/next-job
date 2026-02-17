@@ -25,5 +25,11 @@ export default function JobList({ jobs }: JobListProps) {
     );
   }
 
-  return jobs.map((job) => <JobListItem key={job.id} job={job} />);
+  return (
+    <div className="grid sm:grid-cols-2 gap-8">
+      {jobs.map((job) => (
+        <JobListItem key={job.id} job={job} />
+      ))}
+    </div>
+  );
 }
