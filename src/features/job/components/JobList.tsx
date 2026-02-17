@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import EmptyList from "@/components/EmptyList";
+import SectionTitle from "@/components/SectionTitle";
 import JobListItem from "@/features/job/components/JobListItem";
 
 import { Job } from "@/generated/prisma/client";
@@ -26,10 +27,18 @@ export default function JobList({ jobs }: JobListProps) {
   }
 
   return (
-    <div className="grid sm:grid-cols-2 gap-8">
-      {jobs.map((job) => (
-        <JobListItem key={job.id} job={job} />
-      ))}
+    <div className="space-y-12">
+      <div className="space-y-8">
+        <SectionTitle
+          text={`${jobs.length} job${jobs.length > 1 ? "s" : ""} found`}
+        />
+
+        <div className="grid sm:grid-cols-2 gap-8">
+          {jobs.map((job) => (
+            <JobListItem key={job.id} job={job} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
