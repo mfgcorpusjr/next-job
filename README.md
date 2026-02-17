@@ -6,6 +6,7 @@ A working version of this app is available at https://next-job-smoky.vercel.app/
 ### Key Dependencies
 - Next 16
 - Typescript
+- Clerk Auth
 - Neon DB
 - Prisma
 - Zod
