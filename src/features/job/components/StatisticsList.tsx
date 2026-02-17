@@ -9,27 +9,27 @@ import StatisticsListItem from "@/features/job/components/StatisticsListItem";
 import { Statistic } from "@/features/job/utils/types";
 
 type StatisticsListProps = {
-  statistics: Statistic;
+  data: Statistic;
 };
 
-export default function StatisticsList({ statistics }: StatisticsListProps) {
+export default function StatisticsList({ data }: StatisticsListProps) {
   return (
     <div className="flex flex-col lg:flex-row gap-8">
       <StatisticsListItem
         label="Pending Jobs"
-        count={statistics.Pending}
+        count={data.Pending}
         icon={LucideCircleDashed}
       />
 
       <StatisticsListItem
         label="Interviews Set"
-        count={statistics.Interview}
+        count={data.Interview}
         icon={LucideMessagesSquare}
       />
 
       <StatisticsListItem
         label="Jobs Declined"
-        count={statistics.Declined}
+        count={data.Declined}
         icon={LucideCircleX}
       />
     </div>

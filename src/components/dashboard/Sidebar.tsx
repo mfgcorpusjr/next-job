@@ -37,7 +37,7 @@ export default function Sidebar() {
             {links.map((link) => {
               const isActive = link.href === pathname;
               const className = isActive
-                ? "bg-primary/10 text-primary"
+                ? "bg-primary text-white"
                 : "text-muted-foreground hover:bg-secondary hover:text-foreground";
 
               return (

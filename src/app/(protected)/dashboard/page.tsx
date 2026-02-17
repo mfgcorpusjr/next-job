@@ -10,14 +10,16 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  const statistics = await getStatisticsData();
-  const charts = await getChartData();
+  const [statisticsData, chartData] = await Promise.all([
+    getStatisticsData(),
+    getChartData(),
+  ]);
 
   return (
     <div className="space-y-24">
-      <StatisticsList statistics={statistics} />
+      <StatisticsList data={statisticsData} />
 
-      <JobsChart charts={charts} />
+      <JobsChart data={chartData} />
     </div>
   );
 }

@@ -10,20 +10,20 @@ import {
   Legend,
 } from "recharts";
 
+import SectionTitle from "@/components/SectionTitle";
+
 import { Chart } from "@/features/job/utils/types";
 
 type JobsChartProps = {
-  charts: Chart[];
+  data: Chart[];
 };
 
-export default function JobsChart({ charts }: JobsChartProps) {
+export default function JobsChart({ data }: JobsChartProps) {
   return (
-    <div className="space-y-8">
-      <h3 className="text-2xl text-center font-bold tracking-tight">
-        Monthly Applications
-      </h3>
+    <div className="space-y-12">
+      <SectionTitle text="Monthly Applications" />
 
-      <BarChart data={charts} responsive style={{ height: "300px" }}>
+      <BarChart data={data} responsive style={{ height: "300px" }}>
         <CartesianGrid strokeDasharray="3 3" />
 
         <XAxis dataKey="date" />
