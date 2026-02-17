@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 import { Badge } from "@/components/ui/badge";
 
 type JobStatusProps = {
@@ -5,12 +7,15 @@ type JobStatusProps = {
 };
 
 export default function JobStatus({ status }: JobStatusProps) {
-  const className =
-    status === "Pending"
-      ? "bg-orange-500/10 text-orange-500"
-      : status === "Interview"
-        ? "bg-green-500/10 text-green-500"
-        : "bg-red-500/10 text-red-500";
-
-  return <Badge className={className}>{status}</Badge>;
+  return (
+    <Badge
+      className={cn({
+        "bg-orange-500/10 text-orange-500": status === "Pending",
+        "bg-green-500/10 text-green-500": status === "Interview",
+        "bg-red-500/10 text-red-500": status === "Declined",
+      })}
+    >
+      {status}
+    </Badge>
+  );
 }
