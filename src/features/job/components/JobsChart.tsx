@@ -1,18 +1,25 @@
 "use client";
 
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-import SectionTitle from "@/components/SectionTitle";
+import { Card, CardContent } from "@/components/ui/card";
 
 import { Chart } from "@/features/job/utils/types";
+
+const chartConfig = {
+  count: {
+    label: "Count",
+    color: "#7C39ED",
+  },
+} satisfies ChartConfig;
 
 type JobsChartProps = {
   data: Chart[];
@@ -20,27 +27,30 @@ type JobsChartProps = {
 
 export default function JobsChart({ data }: JobsChartProps) {
   return (
-    <div className="space-y-12">
-      <SectionTitle text="Monthly Applications" />
+    <Card className="w-full border-border/50 shadow-none">
+      <CardContent>
+        <ChartContainer
+          config={chartConfig}
+          className="min-h-50 max-h-96 w-full"
+        >
+          <BarChart accessibilityLayer data={data}>
+            <CartesianGrid vertical={false} />
 
-      <BarChart data={data} responsive style={{ height: "300px" }}>
-        <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+            />
 
-        <XAxis dataKey="date" />
+            <ChartTooltip content={<ChartTooltipContent />} />
 
-        <YAxis width="auto" />
+            <ChartLegend content={<ChartLegendContent />} />
 
-        <Tooltip labelStyle={{ color: "#000" }} />
-
-        <Legend />
-
-        <Bar
-          dataKey="count"
-          fill="#7C39ED"
-          activeBar={{ fill: "#7C39ED" }}
-          radius={[10, 10, 0, 0]}
-        />
-      </BarChart>
-    </div>
+            <Bar dataKey="count" fill="var(--color-count)" radius={4} />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
   );
 }
