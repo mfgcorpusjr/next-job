@@ -68,6 +68,26 @@ export const upsertJob = async ({ id = "", formData }: UpsertJobProps) => {
   }
 };
 
+export const deleteJob = async (id: string) => {
+  const userId = await getUserIdOrRedirect();
+
+  try {
+    await prisma.job.delete({
+      where: {
+        clerkId: userId,
+        id,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/jobs");
+
+    return { status: "SUCCESS", message: "Job deleted" };
+  } catch (e) {
+    return renderError(e);
+  }
+};
+
 export const getStatisticsData = async (): GetStatisticsDataReturnType => {
   const userId = await getUserIdOrRedirect();
 
