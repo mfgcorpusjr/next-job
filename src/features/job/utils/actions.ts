@@ -30,6 +30,21 @@ export const getJob = async (id: string) => {
   return redirect("/jobs");
 };
 
+export const getJobs = async () => {
+  const userId = await getUserIdOrRedirect();
+
+  const jobs = await prisma.job.findMany({
+    where: {
+      clerkId: userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return jobs;
+};
+
 export const upsertJob = async ({ id = "", formData }: UpsertJobProps) => {
   const userId = await getUserIdOrRedirect();
 

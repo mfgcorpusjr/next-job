@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div className="space-y-24">
+    <div className="space-y-12">
       <StatisticsList data={statisticsData} />
 
       <JobsChart data={chartData} />
